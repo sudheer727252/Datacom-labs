@@ -1,0 +1,221 @@
+
+Switch>
+Switch>EN
+Switch#en
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname SWA
+SWA(config)#int range g0/0- 1
+SWA(config-if-range)#channel-group 1 mode on
+Creating a port-channel interface Port-channel 1
+
+SWA(config-if-range)#
+*Jun 26 11:48:01.605: %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel1, changed state to up
+SWA(config-if-range)#int range g0/2- 3
+SWA(config-if-range)#channel-group 2 mode auto
+Creating a port-channel interface Port-channel 2
+
+SWA(config-if-range)#int range g1/0- 1
+SWA(config-if-range)#ch
+*Jun 26 11:49:11.929: %PM-4-ERR_DISABLE: channel-misconfig (STP) error detected on Po1, putting Gi0/0 in err-disable state
+*Jun 26 11:49:11.939: %PM-4-ERR_DISABLE: channel-misconfig (STP) error detected on Po1, putting Gi0/1 in err-disable state
+*Jun 26 11:49:11.943: %PM-4-ERR_DISABLE: channel-misconfig (STP) error detected on Po1, putting Po1 in err-disable stateann
+*Jun 26 11:49:12.934: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to down
+*Jun 26 11:49:12.939: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to down
+*Jun 26 11:49:13.939: %LINK-3-UPDOWN: Interface GigabitEthernet0/0, changed state to down
+*Jun 26 11:49:13.943: %LINK-3-UPDOWN: Interface Port-channel1, changed state to down
+*Jun 26 11:49:13.945: %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to down
+*Jun 26 11:49:14.950: %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel1, changed state to down
+% Incomplete command.
+
+SWA(config-if-range)#int range g1/0- 1
+SWA(config-if-range)#channel-group 3 mode active
+Creating a port-channel interface Port-channel 3
+
+SWA(config-if-range)#
+*Jun 26 11:50:18.945: %EC-5-L3DONTBNDL2: Gi1/0 suspended: LACP currently not enabled on the remote port.
+*Jun 26 11:50:19.291: %EC-5-L3DONTBNDL2: Gi1/1 suspended: LACP currently not enabled on the remote port.
+*Jun 26 11:52:29.600: %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel2, changed state to up
+*Jun 26 11:53:34.689: %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel3, changed state to up$hub.com/Chellemvikhil/wipro-assessement-DATACOMM.git
+https://github.com/Chellemvikhil/wipro-assessement-DATACOMM.git
+ ^
+% Invalid input detected at '^' marker.
+
+SWA(config-if-range)#exit
+SWA(config)#exit
+SWA#
+*Jun 26 12:00:50.756: %SYS-5-CONFIG_I: Configured from console by console
+SWA#show run
+Building configuration...
+
+Current configuration : 3745 bytes
+!
+! Last configuration change at 12:00:50 UTC Wed Jun 26 2024
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname SWA
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel3
+!
+interface Port-channel2
+!
+interface Port-channel1
+!
+interface GigabitEthernet0/0
+ media-type rj45
+ negotiation auto
+ channel-group 1 mode on
+!
+interface GigabitEthernet0/1
+ media-type rj45
+ negotiation auto
+ channel-group 1 mode on
+!
+interface GigabitEthernet0/2
+ media-type rj45
+ negotiation auto
+ channel-group 2 mode auto
+!
+interface GigabitEthernet0/3
+ media-type rj45
+ negotiation auto
+ channel-group 2 mode auto
+!
+interface GigabitEthernet1/0
+ media-type rj45
+ negotiation auto
+ channel-group 3 mode active
+!
+interface GigabitEthernet1/1
+ media-type rj45
+ negotiation auto
+ channel-group 3 mode active
+!
+interface GigabitEthernet1/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/3
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/3
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/3
+ media-type rj45
+ negotiation auto
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner login ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+!
+line con 0
+line aux 0
+line vty 0 4
+!
+!
+end

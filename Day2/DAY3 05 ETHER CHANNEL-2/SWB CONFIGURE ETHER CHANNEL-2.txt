@@ -1,0 +1,330 @@
+
+Switch>
+Switch>en
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname SWB
+SWB(config)#int range g0/0- 1
+SWB(config-if-range)#channel-group 1 mode on
+Creating a port-channel interface Port-channel 1
+
+SWB(config-if-range)#
+*Jun 26 11:51:45.195: %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel1, changed state to up
+SWB(config-if-range)#int range g0/2 -3
+SWB(config-if-range)#channel-group 2 mode desirable
+Creating a port-channel interface Port-channel 2
+
+SWB(config-if-range)#
+*Jun 26 11:52:31.804: %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel2, changed state to up
+SWB(config-if-range)#int range g1/0- 1
+SWB(config-if-range)#channel-group 3 mode passive
+Creating a port-channel interface Port-channel 3
+
+SWB(config-if-range)#
+*Jun 26 11:53:21.694: %EC-5-L3DONTBNDL2: Gi1/0 suspended: LACP currently not enabled on the remote port.
+*Jun 26 11:53:21.753: %EC-5-L3DONTBNDL2: Gi1/1 suspended: LACP currently not enabled on the remote port.
+*Jun 26 11:53:36.885: %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel3, changed state to up
+SWB(config-if-range)#exit
+SWB(config)#exit
+SWB#
+*Jun 26 11:53:53.592: %SYS-5-CONFIG_I: Configured from console by console
+SWB#enable
+SWB#show ip int brief
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0     unassigned      YES unset  up                    up
+GigabitEthernet0/1     unassigned      YES unset  up                    up
+GigabitEthernet0/2     unassigned      YES unset  up                    up
+GigabitEthernet0/3     unassigned      YES unset  up                    up
+GigabitEthernet1/0     unassigned      YES unset  up                    up
+GigabitEthernet1/1     unassigned      YES unset  up                    up
+GigabitEthernet1/2     unassigned      YES unset  down                  down
+GigabitEthernet1/3     unassigned      YES unset  down                  down
+GigabitEthernet2/0     unassigned      YES unset  down                  down
+GigabitEthernet2/1     unassigned      YES unset  down                  down
+GigabitEthernet2/2     unassigned      YES unset  down                  down
+GigabitEthernet2/3     unassigned      YES unset  down                  down
+GigabitEthernet3/0     unassigned      YES unset  down                  down
+GigabitEthernet3/1     unassigned      YES unset  down                  down
+GigabitEthernet3/2     unassigned      YES unset  down                  down
+GigabitEthernet3/3     unassigned      YES unset  down                  down
+Port-channel3          unassigned      YES unset  up                    up
+Port-channel2          unassigned      YES unset  up                    up
+Port-channel1          unassigned      YES unset  up                    up
+SWB#show etherchannel summary
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      N - not in use, no aggregation
+        f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        m - not in use, port not aggregated due to minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+        A - formed by Auto LAG
+
+
+Number of channel-groups in use: 3
+Number of aggregators:           3
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(SU)          -        Gi0/0(P)    Gi0/1(P)
+2      Po2(SU)         PAgP      Gi0/2(P)    Gi0/3(P)
+3      Po3(SU)         LACP      Gi1/0(P)    Gi1/1(P)
+
+SWB#show etherchannel port-channel
+                Channel-group listing:
+                ----------------------
+
+Group: 1
+----------
+                Port-channels in the group:
+                ---------------------------
+
+Port-channel: Po1
+------------
+
+Age of the Port-channel   = 0d:00h:03m:41s
+Logical slot/port   = 16/0          Number of ports = 2
+GC                  = 0x00000000      HotStandBy port = null
+Port state          = Port-channel Ag-Inuse
+Protocol            =    -
+Port security       = Disabled
+
+Ports in the Port-channel:
+
+Index   Load   Port     EC state        No of bits
+------+------+------+------------------+-----------
+  0     00     Gi0/0    On                 0
+  0     00     Gi0/1    On                 0
+
+Time since last port bundled:    0d:00h:03m:41s    Gi0/1
+
+Group: 2
+----------
+                Port-channels in the group:
+                ---------------------------
+
+Port-channel: Po2
+------------
+
+Age of the Port-channel   = 0d:00h:02m:57s
+Logical slot/port   = 16/1          Number of ports = 2
+GC                  = 0x00020001      HotStandBy port = null
+Port state          = Port-channel Ag-Inuse
+Protocol            =   PAgP
+Port security       = Disabled
+
+Ports in the Port-channel:
+
+Index   Load   Port     EC state        No of bits
+------+------+------+------------------+-----------
+  0     00     Gi0/2    Desirable-Sl       0
+  0     00     Gi0/3    Desirable-Sl       0
+
+Time since last port bundled:    0d:00h:02m:55s    Gi0/3
+
+Group: 3
+----------
+                Port-channels in the group:
+                ---------------------------
+
+Port-channel: Po3    (Primary Aggregator)
+
+------------
+
+Age of the Port-channel   = 0d:00h:02m:10s
+Logical slot/port   = 16/2          Number of ports = 2
+HotStandBy port = null
+Port state          = Port-channel Ag-Inuse
+Protocol            =   LACP
+Port security       = Disabled
+
+Ports in the Port-channel:
+
+Index   Load   Port     EC state        No of bits
+------+------+------+------------------+-----------
+  0     00     Gi1/0    Passive            0
+  0     00     Gi1/1    Passive            0
+
+Time since last port bundled:    0d:00h:01m:50s    Gi1/1
+Time since last port Un-bundled: 0d:00h:01m:52s    Gi1/1
+
+SWB#show run
+Building configuration...
+
+Current configuration : 3757 bytes
+!
+! Last configuration change at 11:53:53 UTC Wed Jun 26 2024
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname SWB
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel3
+!
+interface Port-channel2
+!
+interface Port-channel1
+!
+interface GigabitEthernet0/0
+ media-type rj45
+ negotiation auto
+ channel-group 1 mode on
+!
+interface GigabitEthernet0/1
+ media-type rj45
+ negotiation auto
+ channel-group 1 mode on
+!
+interface GigabitEthernet0/2
+ media-type rj45
+ negotiation auto
+ channel-group 2 mode desirable
+!
+interface GigabitEthernet0/3
+ media-type rj45
+ negotiation auto
+ channel-group 2 mode desirable
+!
+interface GigabitEthernet1/0
+ media-type rj45
+ negotiation auto
+ channel-group 3 mode passive
+!
+interface GigabitEthernet1/1
+ media-type rj45
+ negotiation auto
+ channel-group 3 mode passive
+!
+interface GigabitEthernet1/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/3
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/3
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/3
+ media-type rj45
+ negotiation auto
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner login ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+!
+line con 0
+line aux 0
+line vty 0 4
+!
+!
+end
