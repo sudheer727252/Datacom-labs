@@ -1,0 +1,147 @@
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#int f0/0
+R2(config-if)#ip add
+R2(config-if)#ip address 192.168.10.2 255.255.255.0
+R2(config-if)#no shut
+R2(config-if)#
+*Mar  1 00:04:28.183: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:04:29.183: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+R2(config-if)#int f0/1
+R2(config-if)#ip add
+R2(config-if)#ip address 192.168.20.1 255.255.255.0
+R2(config-if)#no shut
+R2(config-if)#
+*Mar  1 00:05:48.295: %LINK-3-UPDOWN: Interface FastEthernet0/1, changed state to up
+*Mar  1 00:05:49.295: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+R2(config-if)#int f1/0
+R2(config-if)#ip add
+R2(config-if)#ip address 192.168.30.1 255.255.255.0
+R2(config-if)#no shut
+R2(config-if)#
+*Mar  1 00:06:33.319: %LINK-3-UPDOWN: Interface FastEthernet1/0, changed state to up
+*Mar  1 00:06:34.319: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet1/0, changed state to up
+R2(config-if)#exit
+R2(config)#router rip
+R2(config-router)#version 1
+R2(config-router)#network 192.168.10.0
+R2(config-router)#network 192.168.20.0
+R2(config-router)#network 192.168.30.0
+R2(config-router)#exit
+R2(config)#
+R2(config)#exit
+R2#s
+*Mar  1 01:30:14.171: %SYS-5-CONFIG_I: Configured from console by console
+R2#sh ip int br
+Interface                  IP-Address      OK? Method Status                Protocol
+FastEthernet0/0            192.168.10.2    YES manual up                    up
+FastEthernet0/1            192.168.20.1    YES manual up                    up
+FastEthernet1/0            192.168.30.1    YES manual up                    up
+-------------------------------------------------------------------------------------------------
+R2#sh run
+Building configuration...
+
+Current configuration : 1092 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+memory-size iomem 5
+no ip icmp rate-limit unreachable
+ip cef
+!
+!
+!
+!
+no ip domain lookup
+ip auth-proxy max-nodata-conns 3
+ip admission max-nodata-conns 3
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip tcp synwait-time 5
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.168.10.2 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ ip address 192.168.20.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface FastEthernet1/0
+ ip address 192.168.30.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+router rip
+ version 1
+ network 192.168.10.0
+ network 192.168.20.0
+ network 192.168.30.0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+!
+!
+end
